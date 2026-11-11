@@ -1,0 +1,28 @@
+[project]
+name = "context-handoff"
+version = "0.1.0"
+description = "A Claude Code skill and hook that hand a session over to a fresh one at 85 % context, at the latest at 89 %, in a new terminal window; the old session then ends itself."
+requires-python = ">=3.9"
+license = "MIT"
+
+[tool.ruff]
+target-version = "py39"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "UP", "S", "B", "SIM", "RUF", "C90", "PLR0912", "PLR0915"]
+ignore = [
+    "S603",  # subprocess calls with argument lists are the point of the spawn script
+    "S607",  # open, osascript and ps are system tools found on PATH
+    "S108",  # the per-user folder under /tmp is checked for owner and rights before use
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["skills/handoff/scripts"]
